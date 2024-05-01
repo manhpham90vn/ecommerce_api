@@ -10,6 +10,8 @@ app.use(helmet());
 app.use(compression());
 
 // db
+const instance = require("./databases/mongodb")
+instance.checkOverload();
 
 // routes
 app.get("/", (req, res) => {
@@ -24,8 +26,8 @@ const server = app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
-process.on("SIGINT", () => {
-  server.close(() => {
-    console.log("Server is closed");
-  });
+process.on("SIGINT", async () => {
+  await instance.close();
+  server.close();
+  process.exit();
 });
