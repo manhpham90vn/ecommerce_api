@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const os = require("os");
 const process = require("process");
+const { MONGO_URI } = require("../configs/configs");
 
 class Database {
     constructor() {
@@ -8,13 +9,11 @@ class Database {
     }
 
     connect() {
-        const connectString = "mongodb://mongo:27017/db";
-
         mongoose.set("debug", true);
         mongoose.set("debug", { color: true })
 
         mongoose
-        .connect(connectString, { maxPoolSize: 100 })
+        .connect(MONGO_URI, { maxPoolSize: 100 })
         .then(() => console.log("MongoDB connected"))
         .catch((err) => console.error(err));
     }

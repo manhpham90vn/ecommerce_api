@@ -3,6 +3,7 @@ const express = require("express");
 const { default: helmet } = require("helmet");
 const morgan = require("morgan");
 const app = express();
+const { APP_PORT } = require("./configs/configs");
 
 // middleware
 app.use(morgan("combined"));
@@ -20,10 +21,9 @@ app.get("/", (req, res) => {
 
 // error handlers
 
-const PORT = process.env.PORT || 3000;
-
-const server = app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+// run server
+const server = app.listen(APP_PORT, () => {
+  console.log(`Server is running on port ${APP_PORT}`);
 });
 
 process.on("SIGINT", async () => {
